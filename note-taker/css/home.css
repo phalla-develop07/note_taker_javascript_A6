@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* Background like diary page */
+body {
+    min-height: 100vh;
+    background: repeating-linear-gradient(
+        white,
+        white 28px,
+        #ddd 29px
+    );
+    padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo */
+.logo {
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: purple;
+    font-weight: bold;
+    font-size: 28px;
+
+}
+
+.logo img {
+    width: 90px;
+    /* size: 200px; */
+}
+
+/* Navigation Buttons */
+nav {
+    margin-right: 30px;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-btn {
+    background: purple;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.nav-btn:hover {
+    background: #5e0d8b;
+}
+
+/* Main Content */
+.content {
+    margin-top: 120px;
+    text-align: center;
+}
+
+.content h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.content p {
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* Start Button */
+.start-btn {
+    background: purple;
+    color: white;
+    border: none;
+    padding: 12px 35px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.start-btn:hover {
+    background: #5e0d8b;
+}
