@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Diary - Daily Life and Journal</title>
+    <link rel="stylesheet" href="../css/note-page.css">
+    <script src="../js/note-page.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <button class="btn">Keep a diary</button>
+            <div class="icons">
+                <span class="icon">☰</span>
+                <span class="icon">📅</span>
+                <span class="icon">🔔</span>
+            </div>
+        </div>
+        <div class="search-bar">
+            <span>🔍</span>
+            <input type="text" id="searchInput" placeholder="Search by journal title">
+        </div>
+    </header>
+    <div class="main">
+        <aside class="sidebar">
+            <div class="group-title">Group <span>+</span></div>
+            <ul class="group-list">
+                <li class="group-item selected" data-group="all">All <span id="count-all">0</span></li>
+                <li class="group-item" data-group="Friend">Friend <span id="count-Friend">0</span></li>
+                <li class="group-item" data-group="Family">Family <span id="count-Family">0</span></li>
+                <li class="group-item" data-group="teamwork">teamwork <span id="count-teamwork">0</span></li>
+            </ul>
+        </aside>
+        <section class="note-list" id="noteList">
+            <div class="empty">No notes yet. Click "New Note" to create one.</div>
+        </section>
+        <section class="editor" id="editor">
+            <input type="text" id="noteTitle" placeholder="Note title">
+            <textarea id="noteBody" placeholder="Start writing..."></textarea>
+            <div class="actions">
+                <select id="noteGroup">
+                    <option value="Friend">Friend</option>
+                    <option value="Family">Family</option>
+                    <option value="teamwork">teamwork</option>
+                </select>
+                <button class="btn" id="saveBtn">Save</button>
+                <button class="btn" id="deleteBtn" style="display:none;">Delete</button>
+                <button class="btn" id="newBtn">New Note</button>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
