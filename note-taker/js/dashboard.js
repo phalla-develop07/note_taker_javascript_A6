@@ -1,17 +1,17 @@
 // Data
-let folders = [
-    { name: 'Personal', tags: ['Life', 'Goals'] },
-    { name: 'Work', tags: ['Projects', 'Meetings'] },
-    { name: 'Ideas', tags: ['Creativity', 'Brainstorm'] },
-    { name: 'Learning', tags: ['Books', 'Courses'] }
-];
+// let folders = [
+//     { name: 'Personal', tags: ['Life', 'Goals'] },
+//     { name: 'Work', tags: ['Projects', 'Meetings'] },
+//     { name: 'Ideas', tags: ['Creativity', 'Brainstorm'] },
+//     { name: 'Learning', tags: ['Books', 'Courses'] }
+// ];
 
-let notes = [
-    { title: 'My 2026 Goals', tags: ['Personal'], pinned: true, content: '<p>Here are my main goals for this year...</p><ul><li>Read 24 books</li><li>Exercise 4x/week</li></ul>' },
-    { title: 'Project Alpha Planning', tags: ['Work'], pinned: false, content: '<p>Initial thoughts and timeline for Project Alpha launch in Q2.</p>' },
-    { title: 'Book Notes: Atomic Habits', tags: ['Learning'], pinned: false, content: '<p>Key takeaways:</p><ul><li>Make habits obvious</li><li>Use habit stacking</li></ul>' },
-    { title: 'Creative Writing Prompt Ideas', tags: ['Ideas'], pinned: false, content: '<p>List of prompts to overcome writer\'s block...</p>' }
-];
+// let notes = [
+//     { title: 'My 2026 Goals', tags: ['Personal'], pinned: true, content: '<p>Here are my main goals for this year...</p><ul><li>Read 24 books</li><li>Exercise 4x/week</li></ul>' },
+//     { title: 'Project Alpha Planning', tags: ['Work'], pinned: false, content: '<p>Initial thoughts and timeline for Project Alpha launch in Q2.</p>' },
+//     { title: 'Book Notes: Atomic Habits', tags: ['Learning'], pinned: false, content: '<p>Key takeaways:</p><ul><li>Make habits obvious</li><li>Use habit stacking</li></ul>' },
+//     { title: 'Creative Writing Prompt Ideas', tags: ['Ideas'], pinned: false, content: '<p>List of prompts to overcome writer\'s block...</p>' }
+// ];
 
 let currentNoteIndex = null;
 
