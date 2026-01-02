@@ -1,9 +1,18 @@
-let notes = JSON.parse(localStorage.getItem('notes')) || [];
+document.addEventListener('DOMContentLoaded', () => {
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            // Not logged in — send to login page
+            window.location.href = 'login.html';
+            return;
+        }
+
+        const notesKey = `notes_${currentUser}`;
+        let notes = JSON.parse(localStorage.getItem(notesKey)) || [];
         let currentNoteId = null;
         let currentGroup = 'all';
 
         function saveNotes() {
-            localStorage.setItem('notes', JSON.stringify(notes));
+            localStorage.setItem(notesKey, JSON.stringify(notes));
             updateCounts();
             renderNotes();
         }
@@ -121,7 +130,7 @@ let notes = JSON.parse(localStorage.getItem('notes')) || [];
         document.getElementById('searchInput').oninput = () => {
             renderNotes();
         };
-
         // Initial load
         updateCounts();
         renderNotes();
+    });

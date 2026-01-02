@@ -114,6 +114,17 @@
         font-size: 14px;
       }
 
+      .right .alt-link {
+        text-align: center;
+        margin-top: 10px;
+        color: #fdebd0;
+        font-size: 14px;
+      }
+      .right .alt-link a {
+        color: #fdebd0;
+        text-decoration: underline;
+      }
+
       @media (max-width: 768px) {
         .container {
           flex-direction: column;

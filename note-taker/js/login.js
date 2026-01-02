@@ -1,30 +1,14 @@
-  // function login() {
-  //       const username = document.getElementById("username").value;
-  //       const password = document.getElementById("password").value;
-  //       const errorMsg = document.getElementById("errorMsg");
 
-  //       if (username === "" || password === "") {
-  //         errorMsg.textContent = "Please enter username and password";
-  //         return;
-  //       }
-
-  //       // Demo login check
-  //       if (username === "admin" && password === "1234") {
-  //         alert("Login Successful!");
-  //         errorMsg.textContent = "";
-  //       } else {
-  //         errorMsg.textContent = "Invalid username or password";
-  //       }
-  //     }
-
-  //     document.getElementById("loginBtn").addEventListener("click", login);
-// User database with secure passwords
-const users = [
-  { username: "admin", password: "Admin123!" },
-  { username: "john", password: "John@456" },
-  { username: "sarah", password: "Sarah#789" },
-  { username: "mike", password: "Mike$2025" }
-];
+let users = JSON.parse(localStorage.getItem('users'));
+if (!users) {
+  users = [
+    { username: "admin", password: "Admin123!" },
+    { username: "Rina", password: "Rina@123" },
+    { username: "San", password: "San@123" },
+    { username: "Palla", password: "Palla@123" }
+  ];
+  localStorage.setItem('users', JSON.stringify(users));
+}
 
 // Validate password security requirements
 function validatePassword(password) {
