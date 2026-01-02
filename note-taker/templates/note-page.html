@@ -23,7 +23,19 @@
             <span>🔍</span>
             <input type="text" id="searchInput" placeholder="Search by journal title">
         </div>
+        <div style="display: flex; align-items: center; gap: 15px; margin-right: 20px; color: white;">
+            <span>👤 User: <strong id="userDisplay">Guest</strong></span>
+            <button class="btn" onclick="logout()" style="padding: 8px 15px; cursor: pointer; background-color: #e74c3c;">Logout</button>
+        </div>
     </header>
+    <!-- Welcome Message -->
+    <div id="welcomeMessage" style="display: none; background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 15px 20px; margin: 10px 20px; border-radius: 5px; font-weight: bold; text-align: center;">
+        ✓ Welcome <span id="welcomeUsername"></span>! You have successfully logged in. Start writing your notes below.
+    </div>
+    <!-- Weak password warning -->
+    <div id="weakPassMessage" style="display:none; background-color:#fff3cd; border:1px solid #ffeeba; color:#856404; padding:12px 18px; margin: 0 20px 10px 20px; border-radius:5px; text-align:center;">
+        ⚠️ Your password appears weak. Please consider updating it to a stronger password.
+    </div>
     <div class="main">
         <aside class="sidebar">
             <div class="group-title">Group <span>+</span></div>
@@ -53,5 +65,4 @@
         </section>
     </div>
 </body>
-
 </html>
