@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes Dashboard</title>
+    <link rel="stylesheet" href="/note-taker/css/dashboard.css">
+    <script src="/note-taker/js/dashboard.js" defer></script>
+</head>
+
+<body>
+    <div class="header">
+        <span class="icon">✏️</span>
+        <h1>Notes Dashboard</h1>
+        <input type="text" id="search-input" placeholder="Search notes by title or content...">
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <section class="quick-add">
+                <h2>Quick Add</h2>
+                <ul>
+                    <li id="new-folder"><span>📁</span> New Folder</li>
+                    <li id="new-note"><span>✏️</span> New Note</li>
+                </ul>
+            </section>
+        </div>
+        <div class="main">
+            <section class="folders">
+                <div class="folders-header">
+                    <h2>Folders</h2>
+                    <span class="count">00 Folders</span>
+                </div>
+                <div class="folder-list"></div>
+            </section>
+            <section class="notes">
+                <div class="notes-header">
+                    <div class="notes-tabs">
+                        <span class="active" id="all-notes">All Notes</span>
+                        <span id="pinned-notes">Pinned Notes</span>
+                    </div>
+                </div>
+                <div class="note-grid"></div>
+                <div class="total-notes">Total Notes: 0</div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Editor Modal -->
+    <div id="editor-modal">
+        <div class="editor-container">
+            <div class="editor-header">
+                <input type="text" id="editor-title-input" class="editor-title-input" placeholder="Untitled Note">
+                <div class="save-status" id="save-status">Saved ✓</div>
+                <div class="editor-actions">
+                    <button id="save-note">Save</button>
+                    <button id="delete-note">Delete</button>
+                    <button id="close-editor">Close</button>
+                </div>
+            </div>
+            <div class="toolbar">
+                <button data-command="bold" title="Bold"><b>B</b></button>
+                <button data-command="italic" title="Italic"><i>I</i></button>
+                <button data-command="underline" title="Underline"><u>U</u></button>
+                <button data-command="strikethrough" title="Strikethrough">S̶</button>
+                <button data-command="insertUnorderedList" title="Bullet List">• List</button>
+                <button data-command="insertOrderedList" title="Numbered List">1. List</button>
+                <button data-command="justifyLeft" title="Align Left">Left</button>
+                <button data-command="justifyCenter" title="Center">Center</button>
+                <button data-command="justifyRight" title="Right">Right</button>
+                <select id="font-size-select">
+                    <option value="1">Small</option>
+                    <option value="3" selected>Normal</option>
+                    <option value="5">Large</option>
+                    <option value="7">Huge</option>
+                </select>
+                <select id="font-family-select">
+                    <option value="Arial" selected>Arial</option>
+                    <option value="Times New Roman">Times</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Courier New">Courier</option>
+                </select>
+            </div>
+            <div id="editor-content" contenteditable="true"></div>
+        </div>
+    </div>
+</body>
+
+</html>
