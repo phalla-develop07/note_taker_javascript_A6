@@ -3,52 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Diary - Daily Life and Journal</title>
+    <title>Rich Note Taker</title>
     <link rel="stylesheet" href="../css/note-page.css">
-    <script src="../js/note-page.js" defer></script>
 </head>
 <body>
-    <header>
-        <div class="header-left">
-            <button class="btn">Keep a diary</button>
-            <div class="icons">
-                <span class="icon">☰</span>
-                <span class="icon">📅</span>
-                <span class="icon">🔔</span>
+
+    <div class="sidebar">
+        <div class="user-profile-summary" onclick="openProfileModal()">
+            <img id="sidebarAvatar" src="https://ui-avatars.com/api/?name=Guest&background=bb86fc&color=fff" alt="Profile" class="sidebar-avatar">
+            <div class="sidebar-user-info">
+                <h3 id="sidebarName">Guest User</h3>
+                <span id="sidebarRole" class="user-role">Note Taker</span>
             </div>
         </div>
-        <div class="search-bar">
-            <span>🔍</span>
-            <input type="text" id="searchInput" placeholder="Search by journal title">
+
+        <div class="sidebar-header">
+            <h2>My Note Taker</h2>
         </div>
-    </header>
-    <div class="main">
-        <aside class="sidebar">
-            <div class="group-title">Group <span>+</span></div>
-            <ul class="group-list">
-                <li class="group-item selected" data-group="all">All <span id="count-all">0</span></li>
-                <li class="group-item" data-group="Friend">Friend <span id="count-Friend">0</span></li>
-                <li class="group-item" data-group="Family">Family <span id="count-Family">0</span></li>
-                <li class="group-item" data-group="teamwork">teamwork <span id="count-teamwork">0</span></li>
-            </ul>
-        </aside>
-        <section class="note-list" id="noteList">
-            <div class="empty">No notes yet. Click "New Note" to create one.</div>
-        </section>
-        <section class="editor" id="editor">
-            <input type="text" id="noteTitle" placeholder="Note title">
-            <textarea id="noteBody" placeholder="Start writing..."></textarea>
-            <div class="actions">
-                <select id="noteGroup">
-                    <option value="Friend">Friend</option>
-                    <option value="Family">Family</option>
-                    <option value="teamwork">teamwork</option>
-                </select>
-                <button class="btn" id="saveBtn">Save</button>
-                <button class="btn" id="deleteBtn" style="display:none;">Delete</button>
-                <button class="btn" id="newBtn">New Note</button>
+        
+        <div class="folders-title">Navigation</div>
+        <ul class="folder-list">
+            <li class="folder-item" data-folder="All" onclick="selectFolder('All')">All Notes</li>
+            <li class="folder-item" data-folder="Trash" onclick="selectFolder('Trash')">Trash</li>
+        </ul>
+        <div class="folders-title">My Folders</div>
+        <ul class="folder-list" id="foldersList"></ul>
+
+        <div class="settings-divider">
+            <div class="folder-item settings-folder-item" onclick="openSettings()">
+                ⚙️ Settings
             </div>
-        </section>
+        </div>
     </div>
+
+    <div class="main">
+        <div class="header">
+            <h1>My Notes</h1>
+            <button type="button" class="new-note-btn" onclick="openNoteModal()">+ New Note</button>
+        </div>
+
+        <div id="trashActions" class="trash-actions hidden-section">
+            <button type="button" class="empty-trash-btn" onclick="emptyTrash()">Empty Trash</button>
+        </div>
+
+        <div id="trashedFoldersSection" class="hidden-section" style="margin-bottom: 30px;">
+            <div class="folders-title">Trashed Folders</div>
+            <div id="trashedFoldersList"></div>
+        </div>
+
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search by title, content, or folder name..."
+            onkeyup="displayNotes()">
+
+        <div class="notes-grid" id="notesGrid"></div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal" id="profileModal">
+        <div class="modal-content profile-modal-content">
+            <div class="editor-header profile-header">
+                <h2>Edit Profile</h2>
+            </div>
+            
+            <div class="profile-body">
+                <div class="profile-avatar-section">
+                    <img id="profilePreviewAvatar" src="" class="large-avatar">
+                    <div class="avatar-controls">
+                        <label>Avatar URL</label>
+                        <input type="text" id="profileAvatarInput" placeholder="https://example.com/avatar.jpg" oninput="updateAvatarPreview(this.value)">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Display Name</label>
+                    <input type="text" id="profileNameInput" placeholder="Your Name">
+                </div>
+
+                <div class="form-group">
+                    <label>Professional Title</label>
+                    <input type="text" id="profileRoleInput" placeholder="e.g. Senior Developer">
+                </div>
+
+                <div class="form-group">
+                    <label>Bio</label>
+                    <textarea id="profileBioInput" rows="3" placeholder="Tell us about yourself..."></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn cancel-btn" onclick="closeProfileModal()">Cancel</button>
+                <button type="button" class="btn save-btn" onclick="saveProfile()">Save Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <h3>Customize Background</h3>
+
+            <div class="setting-group">
+                <label class="setting-label">Background Color</label>
+                <input type="color" id="bgColorPicker" value="#121212">
+            </div>
+
+            <div class="setting-group">
+                <label class="setting-label">Upload Background Image</label>
+                <input type="file" id="bgImageUpload" accept="image/*">
+
+                <label class="setting-label setting-label-with-margin">Or Enter Image URL</label>
+                <input type="text" id="bgImageURL" placeholder="https://example.com/image.jpg">
+
+                <div class="bg-preview" id="bgPreview"></div>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn reset-btn" onclick="resetBackground()">Reset Default</button>
+                <button type="button" class="btn cancel-btn" onclick="closeSettings()">Cancel</button>
+                <button type="button" class="btn apply-btn" onclick="applyBackground()">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rich Editor Modal -->
+    <div class="modal" id="noteModal">
+        <div class="modal-content">
+            <div class="editor-header">
+                <input type="text" id="noteTitle" placeholder="Untitled Note">
+                <div class="title-bar">
+                    <div class="folder-group">
+                        <label for="noteFolder">Folder</label>
+                        <select id="noteFolder"></select>
+                    </div>
+                    <div class="due-group">
+                        <label for="noteDueDate">Due Date (optional)</label>
+                        <input type="date" id="noteDueDate" class="friendly-calendar">
+                    </div>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <button type="button" onclick="format('bold')" title="Bold"><b>B</b></button>
+                <button type="button" onclick="format('italic')" title="Italic"><i>I</i></button>
+                <button type="button" onclick="format('underline')" title="Underline"><u>U</u></button>
+
+                <select onchange="format('fontSize', this.value)">
+                    <option value="">Font Size</option>
+                    <option value="1">Small</option>
+                    <option value="3">Normal</option>
+                    <option value="5">Large</option>
+                    <option value="7">Huge</option>
+                </select>
+
+                <input type="color" id="textColor" onchange="format('foreColor', this.value)" title="Text Color">
+                <input type="color" id="bgColor" onchange="format('backColor', this.value)" title="Highlight">
+
+                <button type="button" onclick="format('justifyLeft')">Left</button>
+                <button type="button" onclick="format('justifyCenter')">Center</button>
+                <button type="button" onclick="format('justifyRight')">Right</button>
+
+                <button type="button" onclick="insertLink()">Link</button>
+                <button type="button" onclick="insertImageURL()">Image URL</button>
+
+                <input type="file" id="fileUpload" onchange="handleFileUpload(this)" class="hidden-file-input" multiple>
+                <button type="button" onclick="document.getElementById('fileUpload').click()">Attach File</button>
+                
+                <button type="button" id="fullscreenBtn" onclick="toggleFullScreen()" title="Toggle Full Screen">⛶</button>
+            </div>
+
+            <div contenteditable="true" id="noteEditor"></div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn cancel-btn" onclick="closeNoteModal()">Cancel</button>
+                <button type="button" class="btn save-btn" onclick="saveNote()">Save Note</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/note-page.js"></script>
 </body>
 </html>

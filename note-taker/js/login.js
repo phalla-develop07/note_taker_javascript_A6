@@ -112,7 +112,7 @@ function login() {
 
   // Show success message
   errorMsg.textContent = "✓ Login Successful! Redirecting...";
-  errorMsg.style.color = "#27ae60";
+  errorMsg.style.color = "#33c46fff";
 
   // Redirect to note-page after 1.5 seconds
   setTimeout(() => {
