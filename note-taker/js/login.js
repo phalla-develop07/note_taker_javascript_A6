@@ -1,6 +1,6 @@
 
 // User database with secure passwords
-const users = [
+let users = JSON.parse(localStorage.getItem('users')) || [
   { username: "admin", password: "Admin123!" },
   { username: "john", password: "John@456" },
   { username: "sarah", password: "Sarah#789" },
@@ -87,8 +87,9 @@ function login() {
     return;
   }
 
-  // SUCCESS: Store user in localStorage and redirect
-  localStorage.setItem("currentUser", username);
+  // SUCCESS: Store user in sessionStorage and redirect
+  sessionStorage.setItem('currentUser', username);
+  sessionStorage.setItem('isNewSession', 'true');
   
   // Create user's notes storage
   const notesKey = `notes_${username}`;
@@ -102,7 +103,17 @@ function login() {
 
   // Redirect to note-page after 1.5 seconds
   setTimeout(() => {
-    window.location.href = "templates/note-page.html";
+    // Redirect to note-page (handle template vs root paths)
+    try {
+      const path = window.location.pathname || '';
+      if (path.includes('/templates/') || path.endsWith('note-page.html') || path.endsWith('login.html')) {
+        window.location.href = 'note-page.html';
+      } else {
+        window.location.href = 'templates/note-page.html';
+      }
+    } catch (e) {
+      window.location.href = 'templates/note-page.html';
+    }
   }, 1500);
 }
 // Add event listener when page loads
