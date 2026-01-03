@@ -1,6 +1,6 @@
 
 // User database with secure passwords
-let users = JSON.parse(localStorage.getItem('users')) || [
+window.users = JSON.parse(localStorage.getItem('users')) || [
   { username: "admin", password: "Admin123!" },
   { username: "john", password: "John@456" },
   { username: "sarah", password: "Sarah#789" },
@@ -65,7 +65,7 @@ function login() {
   }
 
   // Check 2: Find user
-  const user = users.find(u => u.username === username);
+  const user = window.users.find(u => u.username === username);
   
   if (!user) {
     errorMsg.textContent = "❌ Username not found";
@@ -94,7 +94,15 @@ function login() {
   // Create user's notes storage
   const notesKey = `notes_${username}`;
   if (!localStorage.getItem(notesKey)) {
-    localStorage.setItem(notesKey, JSON.stringify([]));
+    const defaultData = {
+      folders: [],
+      notes: [],
+      trash: { folders: [], notes: [] },
+      backgroundType: 'color',
+      backgroundValue: '#ffffff',
+      version: 2
+    };
+    localStorage.setItem(notesKey, JSON.stringify(defaultData));
   }
 
   // Show success message

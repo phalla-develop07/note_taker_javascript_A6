@@ -1,68 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Diary - Daily Life and Journal</title>
+    <title>Note Taker</title>
     <link rel="stylesheet" href="../css/note-page.css">
     <script src="../js/note-page.js" defer></script>
 </head>
-
 <body>
-    <header>
-        <div class="header-left">
-            <button class="btn">Keep a diary</button>
-            <div class="icons">
-                <span class="icon">☰</span>
-                <span class="icon">📅</span>
-                <span class="icon">🔔</span>
+    <div class="header">
+        <img class="logo" src="https://play-lh.googleusercontent.com/ier_tKW6D2uAQfroOU1hhZKRNRhuuFJK-h0vdw7kan_KRpDkqkF8GzpwQLwQBykGL_sRGLhB85W1vw6wU7-v" alt="">
+        <h1>MY NOTE</h1>
+        <input type="text" id="search-input" placeholder="Search folders, notes, titles or content...">
+        <div class="header-actions">
+            <button id="bg-settings-btn">🎨 Background</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <section class="quick-add">
+                <h2>Quick Add</h2>
+                <ul>
+                    <li id="new-folder"><span>📁</span> New Folder</li>
+                    <li id="new-note"><span>✏️</span> New Note</li>
+                </ul>
+            </section>
+            <section class="folder-nav">
+                <h2>Navigation</h2>
+                <ul id="folder-nav-list">
+                    <li class="active" data-folder-id="all"><span>📋</span> All Notes</li>
+                    <li data-folder-id="trash"><span>🗑️</span> Trash</li>
+                </ul>
+            </section>
+        </div>
+        <div class="main">
+            <section class="folders" id="folders-section">
+                <div class="folders-header">
+                    <h2>Folders</h2>
+                    <span class="count">00 Folders</span>
+                </div>
+                <div class="folder-list" id="folder-list"></div>
+            </section>
+            <section class="notes">
+                <div id="search-info" class="search-info" style="display:none;"></div>
+                <div class="notes-header">
+                    <div class="notes-tabs">
+                        <span class="active" id="tab-all">All</span>
+                        <span id="tab-pinned">Pinned</span>
+                    </div>
+                </div>
+                <div class="note-grid" id="note-grid"></div>
+                <div class="total-notes" id="total-notes">Total Notes: 0</div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Editor Modal -->
+    <div id="editor-modal">
+        <div class="editor-container">
+            <div class="editor-header">
+                <input type="text" id="editor-title-input" class="editor-title-input" placeholder="Untitled Note">
+                <div class="save-status" id="save-status">Saved ✓</div>
+                <div class="editor-actions">
+                    <button id="save-note">Save</button>
+                    <button id="delete-note">Move to Trash</button>
+                    <button id="close-editor">Close</button>
+                </div>
+            </div>
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <select id="font-family-select">
+                        <option value="Arial">Arial</option>
+                        <option value="Calibri">Calibri</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Comic Sans MS">Comic Sans MS</option>
+                    </select>
+                    <select id="font-size-select">
+                        <option value="1">8</option>
+                        <option value="2">10</option>
+                        <option value="3" selected>12</option>
+                        <option value="4">14</option>
+                        <option value="5">18</option>
+                        <option value="6">24</option>
+                        <option value="7">36</option>
+                    </select>
+                </div>
+                <div class="toolbar-group">
+                    <button data-command="bold" title="Bold"><b>B</b></button>
+                    <button data-command="italic" title="Italic"><i>I</i></button>
+                    <button data-command="underline" title="Underline"><u>U</u></button>
+                    <button data-command="strikethrough" title="Strikethrough"><s>S</s></button>
+                </div>
+                <div class="toolbar-group">
+                    <button id="text-color-btn" title="Text Color">A <span style="color:#e74c3c;">▾</span></button>
+                    <input type="color" id="text-color-picker" style="display:none;">
+                    <button id="highlight-btn" title="Highlight">🖍️ <span style="background:#f1c40f;">▾</span></button>
+                    <input type="color" id="highlight-picker" style="display:none;">
+                </div>
+                <div class="toolbar-group">
+                    <button data-command="insertUnorderedList" title="Bulleted List">• List</button>
+                    <button data-command="insertOrderedList" title="Numbered List">1. List</button>
+                </div>
+                <div class="toolbar-group">
+                    <button data-command="outdent" title="Decrease Indent">↙</button>
+                    <button data-command="indent" title="Increase Indent">↘</button>
+                </div>
+                <div class="toolbar-group">
+                    <button data-command="justifyLeft" title="Align Left">↤</button>
+                    <button data-command="justifyCenter" title="Align Center">↔</button>
+                    <button data-command="justifyRight" title="Align Right">↦</button>
+                    <button data-command="justifyFull" title="Justify">↹</button>
+                </div>
+                <div class="toolbar-group">
+                    <button data-command="superscript" title="Superscript">x²</button>
+                    <button data-command="subscript" title="Subscript">x₂</button>
+                    <button data-command="insertHorizontalRule" title="Horizontal Line">─</button>
+                </div>
+                <div class="toolbar-group">
+                    <button id="insert-media" title="Insert Image/File">🖼️ Media</button>
+                    <button id="clear-format" title="Clear Formatting">Clear</button>
+                </div>
+            </div>
+            <div id="editor-content" contenteditable="true"></div>
+        </div>
+    </div>
+
+    <!-- Insert Media Modal -->
+    <div id="insert-media-modal">
+        <div class="media-modal-content">
+            <h3>Insert Image or File</h3>
+            <div class="media-tabs">
+                <div class="media-tab active" data-panel="upload">Upload File</div>
+                <div class="media-tab" data-panel="url">From URL</div>
+            </div>
+            <div id="upload-panel" class="media-panel active">
+                <input type="file" id="media-file-input" accept="*/*">
+            </div>
+            <div id="url-panel" class="media-panel">
+                <input type="text" id="media-url-input" placeholder="https://example.com/image.jpg">
+            </div>
+            <div class="media-actions">
+                <button id="cancel-media-btn">Cancel</button>
+                <button id="insert-media-btn">Insert</button>
             </div>
         </div>
-        <div class="search-bar">
-            <span>🔍</span>
-            <input type="text" id="searchInput" placeholder="Search by journal title">
-        </div>
-        <div style="display: flex; align-items: center; gap: 15px; margin-right: 20px; color: white;">
-            <span>👤 User: <strong id="userDisplay">Guest</strong></span>
-            <button class="btn" onclick="logout()" style="padding: 8px 15px; cursor: pointer; background-color: #e74c3c;">Logout</button>
-        </div>
-    </header>
-    <!-- Welcome Message -->
-    <div id="welcomeMessage" style="display: none; background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 15px 20px; margin: 10px 20px; border-radius: 5px; font-weight: bold; text-align: center;">
-        ✓ Welcome <span id="welcomeUsername"></span>! You have successfully logged in. Start writing your notes below.
     </div>
-    <!-- Weak password warning -->
-    <div id="weakPassMessage" style="display:none; background-color:#fff3cd; border:1px solid #ffeeba; color:#856404; padding:12px 18px; margin: 0 20px 10px 20px; border-radius:5px; text-align:center;">
-        ⚠️ Your password appears weak. Please consider updating it to a stronger password.
-    </div>
-    <div class="main">
-        <aside class="sidebar">
-            <div class="group-title">Group <span>+</span></div>
-            <ul class="group-list">
-                <li class="group-item selected" data-group="all">All <span id="count-all">0</span></li>
-                <li class="group-item" data-group="Friend">Friend <span id="count-Friend">0</span></li>
-                <li class="group-item" data-group="Family">Family <span id="count-Family">0</span></li>
-                <li class="group-item" data-group="teamwork">teamwork <span id="count-teamwork">0</span></li>
-            </ul>
-        </aside>
-        <section class="note-list" id="noteList">
-            <div class="empty">No notes yet. Click "New Note" to create one.</div>
-        </section>
-        <section class="editor" id="editor">
-            <input type="text" id="noteTitle" placeholder="Note title">
-            <textarea id="noteBody" placeholder="Start writing..."></textarea>
-            <div class="actions">
-                <select id="noteGroup">
-                    <option value="Friend">Friend</option>
-                    <option value="Family">Family</option>
-                    <option value="teamwork">teamwork</option>
-                </select>
-                <button class="btn" id="saveBtn">Save</button>
-                <button class="btn" id="deleteBtn" style="display:none;">Delete</button>
-                <button class="btn" id="newBtn">New Note</button>
+
+    <!-- Background Settings Modal -->
+    <div id="bg-modal">
+        <div class="bg-modal-content">
+            <h2>Change Background</h2>
+            <div class="bg-options">
+                <div class="bg-option active" data-type="color">
+                    <strong>Solid Color</strong>
+                    <input type="color" id="color-picker" value="#ffffff">
+                </div>
+                <div class="bg-option" data-type="image">
+                    <strong>Upload Image</strong>
+                    <label for="image-upload" class="upload-label">
+                        Click or drag an image here<br><br>
+                        <small>JPG, PNG, GIF supported</small>
+                    </label>
+                    <input type="file" id="image-upload" accept="image/*">
+                    <img id="image-preview" alt="Image preview">
+                </div>
             </div>
-        </section>
+            <div class="bg-modal-actions">
+                <button id="cancel-bg">Cancel</button>
+                <button id="apply-bg">Apply</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>

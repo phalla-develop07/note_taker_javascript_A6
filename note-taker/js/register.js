@@ -12,9 +12,8 @@ function registerUser() {
     msg.textContent = 'Please fill all fields';
     return;
   }
-
   // Check username uniqueness
-  const exists = users.find(u => u.username.toLowerCase() === username.toLowerCase());
+  const exists = window.users.find(u => u.username.toLowerCase() === username.toLowerCase());
   if (exists) {
     msg.textContent = 'Username already taken';
     return;
@@ -33,13 +32,21 @@ function registerUser() {
   }
 
   // Add user and persist
-  users.push({ username: username, password: password });
-  localStorage.setItem('users', JSON.stringify(users));
+  window.users.push({ username: username, password: password });
+  localStorage.setItem('users', JSON.stringify(window.users));
 
   // Initialize empty notes for user
   const notesKey = `notes_${username}`;
   if (!localStorage.getItem(notesKey)) {
-    localStorage.setItem(notesKey, JSON.stringify([]));
+    const defaultData = {
+      folders: [],
+      notes: [],
+      trash: { folders: [], notes: [] },
+      backgroundType: 'color',
+      backgroundValue: '#ffffff',
+      version: 2
+    };
+    localStorage.setItem(notesKey, JSON.stringify(defaultData));
   }
 
   msg.style.color = '#dff0d8';
@@ -62,7 +69,6 @@ function registerUser() {
     }
   }, 1400);
 }
-
 // Allow Enter key on confirm field
 document.addEventListener('DOMContentLoaded', function() {
   const confirmInput = document.getElementById('regConfirm');
